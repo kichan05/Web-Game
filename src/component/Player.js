@@ -19,14 +19,14 @@ export const Player = ({x, y, width, height, color, speed, addBullet}) => {
     let horizontal = 0, vertical = 0
     const key = event.key;
     console.log(key)
-    if (key === "ArrowUp")
+    if (key === "ArrowUp" || key === "w")
       vertical = -1
-    else if (key === "ArrowDown")
+    else if (key === "ArrowDown" || key === "s")
       vertical = 1
 
-    if (key === "ArrowRight")
+    if (key === "ArrowRight" || key === "d")
       horizontal = 1
-    else if (key === "ArrowLeft")
+    else if (key === "ArrowLeft" || key === "a")
       horizontal = -1
 
     let nextY = unitInfo.y + speed * vertical
