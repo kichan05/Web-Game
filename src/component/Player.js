@@ -1,8 +1,11 @@
-import {useEffect, useState} from "react";
-import {ROOT_CONFIG} from "../App";
-import Bullet, {BulletConfig} from "../Bullet";
+import {useContext, useEffect, useState} from "react";
+import {GameUnitDispatch, ROOT_CONFIG} from "../App";
+import {BulletConfig} from "../Bullet";
+import { gameUnitReducerType } from "../App"
 
-export const Player = ({x, y, width, height, color, speed, addBullet}) => {
+export const Player = ({x, y, width, height, color, speed}) => {
+  const gameUiDispatch = useContext(GameUnitDispatch)
+
   const [unitInfo, setUnitInfo] = useState({
     x, y, width, height, color
   })
@@ -39,7 +42,8 @@ export const Player = ({x, y, width, height, color, speed, addBullet}) => {
     setUnitInfo({...unitInfo, x: nextX, y: nextY})
 
     if(key === " "){
-      addBullet({
+      gameUiDispatch({
+        type : gameUnitReducerType.addBullet,
         x : unitInfo.x + unitInfo.width / 2 - BulletConfig.width / 2,
         y : unitInfo.y - 30
       })
@@ -68,5 +72,4 @@ Player.defaultProps = {
   height: 30,
   color: "#ff0000",
   speed : 30,
-  addBullet : () => {}
 }

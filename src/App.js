@@ -1,4 +1,5 @@
 import './App.css';
+import React from "react";
 import {useReducer, useState} from "react";
 import {Player} from "./component/Player";
 import {Bullet} from "./Bullet";
@@ -21,30 +22,32 @@ function gameUnitReducer(state, action) {
   }
 }
 
+export const GameUnitDispatch = React.createContext(null)
+
 function App() {
+
   const [gameUnit, gameUnitDispatch] = useReducer(gameUnitReducer, [
     <Player
       width={100} height={100} color="#00ff00"
       y={ROOT_CONFIG.height - 100}
       speed={30}
-      addBullet={({x, y}) => {
-        gameUnitDispatch({type: gameUnitReducerType.addBullet, x, y})
-      }}
     />
   ])
 
 
   return (
     <div className="App">
-      <div
-        id="game-root"
-        style={{
-          width: ROOT_CONFIG.width,
-          height: ROOT_CONFIG.height,
-          backgroundColor: ROOT_CONFIG.backgroundColor
-        }}>
-        {gameUnit.map((unit) => unit)}
-      </div>
+      <GameUnitDispatch.Provider value={gameUnitDispatch}>
+        <div
+          id="game-root"
+          style={{
+            width: ROOT_CONFIG.width,
+            height: ROOT_CONFIG.height,
+            backgroundColor: ROOT_CONFIG.backgroundColor
+          }}>
+          {gameUnit.map((unit) => unit)}
+        </div>
+      </GameUnitDispatch.Provider>
     </div>
   );
 }
